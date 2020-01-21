@@ -8,12 +8,14 @@ import authMiddleware from './app/middlewares/auth';
 const routes = new Router();
 
 routes.get('/', (req, res) => {
-  return res.json({ message: 'AGRO-X HOME PAGE' });
+  return res.json({ message: 'AGROBIZ HOME PAGE' });
 });
 
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
+
+routes.put('/users', UserController.update);
 
 export default routes;
