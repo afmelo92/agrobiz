@@ -6,12 +6,21 @@ class Product extends Model {
       {
         name: Sequelize.STRING,
         quantity: Sequelize.FLOAT,
+        price: Sequelize.FLOAT,
         bushel: Sequelize.BOOLEAN,
       },
       {
         sequelize,
       }
     );
+
+    this.addHook('beforeSave', async product => {
+      if (product.bushel) {
+        product.quantity = await (product.quantity * 27.2155).toFixed(2);
+      }
+    });
+
+    return this;
   }
 }
 

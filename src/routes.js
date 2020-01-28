@@ -20,7 +20,8 @@ routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 
-routes.post('/product', ProductController.store);
+routes.get('/products', ProductController.index);
+routes.post('/products', ProductController.store);
 
 routes.post('/market', MarketController.store);
 

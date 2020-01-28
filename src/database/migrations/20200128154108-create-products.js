@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
+      price: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
       bushel: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
