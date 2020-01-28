@@ -8,6 +8,7 @@ class Product extends Model {
         quantity: Sequelize.FLOAT,
         price: Sequelize.FLOAT,
         bushel: Sequelize.BOOLEAN,
+        available: Sequelize.BOOLEAN,
       },
       {
         sequelize,

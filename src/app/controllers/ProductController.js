@@ -8,7 +8,7 @@ class ProductController {
     const { page = 1 } = req.query;
 
     const products = await Product.findAll({
-      where: { available: true },
+      where: { user_id: req.userId },
       attributes: ['id', 'name', 'quantity', 'price', 'bushel'],
       limit: 20,
       offset: (page - 1) * 20,
@@ -95,6 +95,12 @@ class ProductController {
 
     if (!product) {
       return res.status(400).json({ error: 'Product does not exists' });
+    }
+
+    if (product.user_id !== req.userId) {
+      return res
+        .status(401)
+        .json({ error: 'You only can delete your own products' });
     }
 
     await product.destroy();

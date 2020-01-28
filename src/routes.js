@@ -25,6 +25,7 @@ routes.post('/products', ProductController.store);
 routes.put('/products/:id', ProductController.update);
 routes.delete('/products/:id', ProductController.delete);
 
-routes.post('/market', MarketController.store);
+routes.get('/market', MarketController.index);
+routes.put('/market/:prodId', MarketController.update);
 
 export default routes;
