@@ -1,9 +1,21 @@
 import Product from '../models/Product';
+import User from '../models/User';
 
 class ProductController {
   async index(req, res) {
+    const { page = 1 } = req.query;
+
     const products = await Product.findAll({
       attributes: ['id', 'name', 'quantity', 'price', 'bushel'],
+      limit: 20,
+      offset: (page - 1) * 20,
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name'],
+        },
+      ],
     });
 
     if (products.length === 0) {
@@ -14,8 +26,30 @@ class ProductController {
   }
 
   async store(req, res) {
-    const product = await Product.create(req.body);
-    return res.json(product);
+    const user = await User.findByPk(req.userId);
+
+    if (!user) {
+      return res.status(400).json({ error: 'User does not exists' });
+    }
+
+    const { name, quantity, price, bushel } = req.body;
+
+    await Product.create({
+      name,
+      quantity,
+      price,
+      bushel,
+      user_id: user.id,
+    });
+
+    return res.json({
+      name,
+      quantity,
+      price,
+      bushel,
+      userId: user.id,
+      userName: user.name,
+    });
   }
 
   async update(req, res) {

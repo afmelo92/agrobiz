@@ -22,6 +22,10 @@ class Product extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+  }
 }
 
 export default Product;
